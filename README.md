@@ -3,7 +3,9 @@
 
 ## Installation
 To install the game, download and extract the project to any location you prefer. Install Python3 and then run:
-''' pip3 install pygame '''
 
-Then, in Visual Studio Code install the Python extension and run MyAwesomeGame.py. Alternatively, on the command line type:
-''' python3 myAwesomeGame.py '''
+```pip3 install pygame```
+
+Then, in Visual Studio Code install the Python extension and run MyAwesomeGame.py. Alternatively, on the command line type
+
+```python3 myAwesomeGame.py```
