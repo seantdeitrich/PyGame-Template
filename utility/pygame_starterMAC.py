@@ -101,19 +101,21 @@ class SoundEffect:
     def __init__(self, name, volume=1):
         self.audioFile = pygame.mixer.Sound("sounds//"+name)
         self.audioFile.set_volume(volume)
-    def Play(self, timesToPlay=1):        
-        self.audioFile.play(timesToPlay-1)
-    def Stop(self):
-        self.audioFile.stop()
     def isPlaying(self): #SD Added Nov 3 2022 - Checks to see if a soundEffect is currently playing
         return self.audioFile.get_num_channels() > 0
+    def Play(self, timesToPlay=1):        
+        if not self.isPlaying: #Checks to see if the sound is already playing before playing the sound
+            self.audioFile.play(timesToPlay-1)
+    def Stop(self):
+        self.audioFile.stop()
     
 class Image:
     def __init__(self, name, scale = 1,transparent=True, width=-1, height=-1 ):
         if transparent == True:
-            self.pic = pygame.image.load("images//"+name).convert_alpha()
+            #Note that load returns a surface, which we then convert to a bitmap 
+            self.pic = pygame.image.load("images//"+name).convert_alpha() #Converts the surface to a bitmap w/transparency for blitting
         else:
-            self.pic = pygame.image.load("images//"+name).convert()
+            self.pic = pygame.image.load("images//"+name).convert() #Converts the surface to a bitmap without transparency
 
         self.pic2=self.pic
         self.angle = 0
@@ -143,7 +145,7 @@ class Image:
         self.flip = flip #Assign the passed in flip to the image
             
     def getPic(self):
-        return self.pic
+        return self.pic #Returns the image file being used by the Image
 
     def display(self):      
         #screen.blit(self.pic,[self.x,self.y ])
