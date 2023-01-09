@@ -104,7 +104,7 @@ class SoundEffect:
     def isPlaying(self): #SD Added Nov 3 2022 - Checks to see if a soundEffect is currently playing
         return self.audioFile.get_num_channels() > 0
     def Play(self, timesToPlay=1):        
-        if not self.isPlaying: #Checks to see if the sound is already playing before playing the sound
+        if not self.isPlaying(): #Checks to see if the sound is already playing before playing the sound
             self.audioFile.play(timesToPlay-1)
     def Stop(self):
         self.audioFile.stop()
