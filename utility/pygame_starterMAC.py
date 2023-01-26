@@ -131,8 +131,6 @@ class Image:
             self.height=height
         self.blitRot = False
         self.rect = self.getRect()
-        
-
 
     def flipme(self, flip = False):
         if self.flip: #If the picture is already flipped
@@ -354,23 +352,27 @@ class SpriteSheet:
 def imagesCollide(pic1,pic2) :
     pic1_rect = pic1.getRect()
     pic2_rect = pic2.getRect()
-    #pic1_rect = pic1.rect
-    #pic2_rect = pic2.rect
-    
 
     overlap = pic1_rect.colliderect(pic2_rect)
 
     if overlap:
-        pic1_mask = pygame.mask.from_surface(pic1.getPic())   
-        pic2_mask = pygame.mask.from_surface(pic2.getPic())
+        if (pic1_rect.width * pic1_rect.height < pic2_rect.width * pic2_rect.height):
+            pcell = pygame.Surface((pic1_rect.width, pic1_rect.height), pygame.SRCALPHA)
+            pcell.blit(pic2.getPic(), (0, 0), pygame.Rect(pic1_rect.x-pic2_rect.x,pic1_rect.y-pic2_rect.y,pic1_rect.width, pic1_rect.height))
 
-        bx, by = (pic1_rect[0], pic1_rect[1])
-        offset_x = (bx - pic2_rect[0])
-        offset_y = (by - pic2_rect[1])
-        overlap = pic2_mask.overlap(pic1_mask, (offset_x, offset_y))
+            pic1_mask = pygame.mask.from_surface(pic1.getPic())   
+            pic2_mask = pygame.mask.from_surface(pcell)
+        else:
+            pcell = pygame.Surface((pic2_rect.width, pic2_rect.height), pygame.SRCALPHA)
+            pcell.blit(pic1.getPic(), (0, 0), pygame.Rect(pic2_rect.x-pic1_rect.x,pic2_rect.y-pic1_rect.y,pic2_rect.width, pic2_rect.height))
 
+            pic1_mask = pygame.mask.from_surface(pcell)
+            pic2_mask = pygame.mask.from_surface(pic2.getPic())   
+
+        overlap = pic2_mask.overlap(pic1_mask, (0,0))
+        
     return overlap
-    
+
 def typetext(text):
     if event.type == pygame.KEYDOWN:
               #  if active:

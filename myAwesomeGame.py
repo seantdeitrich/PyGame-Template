@@ -115,7 +115,7 @@ while gameOver == False:
              
         if keys_pressed[pygame.K_d] or keys_pressed[pygame.K_RIGHT]:
             player.x += 2
-        
+       
         if score >= 20:
             level = 1.5
 
